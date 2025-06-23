@@ -1,25 +1,31 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import TodoItem from "./components/TodoItem";
+import TodoInput from "./components/TodoInput";
 import './App.css'
 
+
+type Todo = {
+  id: number;
+  text: string;
+};
 function App() {
 const [input,setInput]=useState("")
+const [todos, setTodos] = useState<Todo[]>([]);
 return(
   <div style={{ padding: "20px" }}>
       <h1>📝 My To-Do List</h1>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter a task"
-      />
-      {/* <button onClick={addTodo}>Add</button>
-
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>✅ {todo.text}</li>
-        ))}
-      </ul> */}
+      <TodoInput onAdd={(text) => {
+  const newTodo = {
+    id: Date.now(),
+    text: text,
+  };
+  setTodos([...todos, newTodo]);
+}} />
+<ul>
+  {todos.map((todo) => (
+    <TodoItem key={todo.id} todo={todo} />
+  ))}
+</ul>
     </div>
 
 )
