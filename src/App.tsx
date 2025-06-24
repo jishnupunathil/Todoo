@@ -7,10 +7,24 @@ import './App.css'
 type Todo = {
   id: number;
   text: string;
+  completed: boolean;
 };
 function App() {
 const [input,setInput]=useState("")
 const [todos, setTodos] = useState<Todo[]>([]);
+
+const deleteTodo = (id: number) => {
+  setTodos(todos.filter((todo) => todo.id !== id));
+};
+
+const toggleComplete = (id: number) => {
+  setTodos(
+    todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    )
+  );
+};
+
 return(
   <div style={{ padding: "20px" }}>
       <h1>📝 My To-Do List</h1>
@@ -18,12 +32,13 @@ return(
   const newTodo = {
     id: Date.now(),
     text: text,
+    completed: false,
   };
   setTodos([...todos, newTodo]);
 }} />
 <ul>
   {todos.map((todo) => (
-    <TodoItem key={todo.id} todo={todo} />
+    <TodoItem key={todo.id} todo={todo} onDelete={deleteTodo} onToggle={toggleComplete}/>
   ))}
 </ul>
     </div>
