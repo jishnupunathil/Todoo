@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TodoItem from "./components/TodoItem";
 import TodoInput from "./components/TodoInput";
 import './App.css'
@@ -9,9 +9,17 @@ type Todo = {
   text: string;
   completed: boolean;
 };
+
 function App() {
-const [input,setInput]=useState("")
-const [todos, setTodos] = useState<Todo[]>([]);
+const getInitialTodos = (): Todo[] => {
+  const stored = localStorage.getItem("todos");
+  return stored ? JSON.parse(stored) : [];
+};
+const [todos, setTodos] = useState<Todo[]>(getInitialTodos());
+
+useEffect(() => {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}, [todos]);
 
 const deleteTodo = (id: number) => {
   setTodos(todos.filter((todo) => todo.id !== id));
@@ -24,6 +32,8 @@ const toggleComplete = (id: number) => {
     )
   );
 };
+
+
 
 return(
   <div style={{ padding: "20px" }}>
