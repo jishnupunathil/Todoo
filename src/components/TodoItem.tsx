@@ -14,30 +14,29 @@ type Props = {
 
 const TodoItem: React.FC<Props> = ({ todo, onDelete, onToggle }) => {
   return (
-    <li style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-      {/* ✅ Checkbox */}
-      <input
-        type="checkbox"
-        checked={todo.completed} // ✅ box is ticked if completed is true
-        onChange={() => onToggle(todo.id)} // 🖱️ when clicked, toggle
-      />
-
-      {/* 📝 Todo Text */}
-      <span
-        style={{
-          textDecoration: todo.completed ? "line-through" : "none", // ✅ strike if completed
-          color: todo.completed ? "#888" : "#000",
-          flex: 1,
-        }}
-      >
-        {todo.text}
-      </span>
-
-      {/* ❌ Delete Button */}
-      <button onClick={() => onDelete(todo.id)} style={{ color: "red" }}>
-        ❌
-      </button>
-    </li>
+    <li className="flex justify-between items-center bg-gray-100 p-3 rounded-lg shadow-sm hover:shadow-md transition">
+  <div className="flex items-center gap-3">
+    <input
+      type="checkbox"
+      checked={todo.completed}
+      onChange={() => onToggle(todo.id)}
+      className="w-5 h-5 accent-blue-500"
+    />
+    <span
+      className={`text-lg ${
+        todo.completed ? "line-through text-gray-400" : "text-gray-800"
+      }`}
+    >
+      {todo.text}
+    </span>
+  </div>
+  <button
+    onClick={() => onDelete(todo.id)}
+    className="text-red-500 hover:text-red-700 text-xl transition"
+  >
+    ❌
+  </button>
+</li>
   );
 };
 

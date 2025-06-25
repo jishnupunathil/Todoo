@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import TodoItem from "./components/TodoItem";
 import TodoInput from "./components/TodoInput";
-import './App.css'
+import './index.css'
 
 
 type Todo = {
@@ -36,9 +36,13 @@ const toggleComplete = (id: number) => {
 
 
 return(
-  <div style={{ padding: "20px" }}>
-      <h1>📝 My To-Do List</h1>
-      <TodoInput onAdd={(text) => {
+<div className="min-h-screen bg-gradient-to-br from-indigo-100 to-white py-10 px-4">
+  <div className="max-w-md mx-auto bg-white shadow-xl rounded-xl p-6">
+    <h1 className="text-4xl font-bold text-blue-600 text-center mb-6">
+      📝 Palakkadan ToDo List
+    </h1>
+
+         <TodoInput onAdd={(text) => {
   const newTodo = {
     id: Date.now(),
     text: text,
@@ -46,14 +50,24 @@ return(
   };
   setTodos([...todos, newTodo]);
 }} />
-<ul>
-  {todos.map((todo) => (
-    <TodoItem key={todo.id} todo={todo} onDelete={deleteTodo} onToggle={toggleComplete}/>
-  ))}
-</ul>
-    </div>
+
+    <ul className="mt-6 space-y-3">
+      {todos.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onDelete={deleteTodo}
+          onToggle={toggleComplete}
+        />
+      ))}
+    </ul>
+  </div>
+</div>
+  
+
 
 )
 }
+
 
 export default App
